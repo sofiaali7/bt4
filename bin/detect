@@ -1,0 +1,5 @@
+#!/bin/bash
+# Release script for Bento4 buildpack
+
+echo "No release configurations needed for Bento4."
+exit 0
