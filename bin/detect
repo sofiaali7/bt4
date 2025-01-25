@@ -1,0 +1,10 @@
+#!/bin/bash
+# Detect script for Bento4 buildpack
+
+if [ -f "USE_BENTO4" ]; then
+  echo "Bento4"
+  exit 0
+else
+  echo "No Bento4 marker found"
+  exit 1
+fi
