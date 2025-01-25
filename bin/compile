@@ -2,28 +2,21 @@
 # Compile script for Bento4 buildpack
 
 BUILD_DIR=$1
-CACHE_DIR=$2
-ENV_DIR=$3
 
-echo "Starting Bento4 build..."
-
-# Clone Bento4 repository
-git clone https://github.com/axiomatic-systems/Bento4.git $BUILD_DIR/Bento4
-
-# Navigate to the build directory
-cd $BUILD_DIR/Bento4/Build
-
-# Install required tools
 echo "Installing required tools..."
-apt-get update && apt-get install -y build-essential cmake
+apt-get update && apt-get install -y build-essential cmake git
 
-# Build Bento4
-echo "Building Bento4..."
+echo "Cloning Bento4 repository..."
+BENTO4_DIR="$BUILD_DIR/Bento4"
+git clone --depth=1 https://github.com/axiomatic-systems/Bento4.git "$BENTO4_DIR"
+
+echo "Building Bento4 binaries..."
+cd "$BENTO4_DIR/Build"
 cmake ..
 make
 
-# Move binaries to bin directory for easier access
-mkdir -p $BUILD_DIR/bin
-cp ../Apps/* $BUILD_DIR/bin
+echo "Moving Bento4 binaries to /app/bin..."
+mkdir -p "$BUILD_DIR/bin"
+cp ../Apps/* "$BUILD_DIR/bin"
 
-echo "Bento4 build completed successfully"
+echo "Bento4 buildpack installation complete."
